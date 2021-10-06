@@ -80,6 +80,10 @@ DerivedDataCache/*
 
 Content/StarterContent/*
 
+# MegaScans are huge and can be safely ignored
+Content/MegaScans/*
+Content/MSPresets/*
+
 # VSCode Files
 /.vscode/*
 Escape.code-workspace
