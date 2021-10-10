@@ -26,6 +26,14 @@ void UGrabberComponent::BeginPlay()
 	UE_LOG(LogTemp, Warning, TEXT("GrabberComponent initiated in %s"), *GetOwner()->GetName());
 
 	//check for physics handle component
+	FindPhysicsHandleComponent();
+
+	//setting up input component
+	SetupInputComponent();
+}
+
+void UGrabberComponent::FindPhysicsHandleComponent()
+{
 	PhysicsHandle = GetOwner()->FindComponentByClass<UPhysicsHandleComponent>();
 
 	if (PhysicsHandle)
@@ -36,8 +44,10 @@ void UGrabberComponent::BeginPlay()
 	{
 		UE_LOG(LogTemp, Error, TEXT("Physics handle not found on %s"), *GetOwner()->GetName());
 	}
+}
 
-	//check for input component
+void UGrabberComponent::SetupInputComponent()
+{
 	InputComponent = GetOwner()->FindComponentByClass<UInputComponent>();
 
 	if (InputComponent)
@@ -52,30 +62,33 @@ void UGrabberComponent::BeginPlay()
 	}
 }
 
-
-
 void UGrabberComponent::Grab()
 {
 	UE_LOG(LogTemp, Warning, TEXT("Grab Pressed by %s"), *GetOwner()->GetName());
+
+	GetFirstPhysicsBodyInReach();
+
+	//if we hit something then attach a physics handle
+
+	//try and reach any actors with physics body collision channel set
 }
 
 void UGrabberComponent::Release()
 {
 	UE_LOG(LogTemp, Warning, TEXT("Grab Released by %s"), *GetOwner()->GetName());
+	//release physics handle
 }
 
-// Called every frame
-void UGrabberComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction)
+FHitResult UGrabberComponent::GetFirstPhysicsBodyInReach() const
 {
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	// ...
+	//getting player view point location
 	FVector PlayerViewPointLocation;
 	FRotator PlayerViewPointRotation;
 	GetWorld()->GetFirstPlayerController()->GetPlayerViewPoint(OUT PlayerViewPointLocation, OUT PlayerViewPointRotation);
 
 	//UE_LOG(LogTemp, Warning, TEXT("Player Location: %s , Player Rotation: %s"), *PlayerViewPointLocation.ToString(), *PlayerViewPointRotation.ToString());
-
+	//setting up line trace
 	FVector LineTraceEnd = PlayerViewPointLocation + PlayerViewPointRotation.Vector() * Reach;
 
 	DrawDebugLine(GetWorld(), PlayerViewPointLocation, LineTraceEnd, FColor::Green, false, 0.f, 0, 5.f);
@@ -95,11 +108,16 @@ void UGrabberComponent::TickComponent(float DeltaTime, ELevelTick TickType, FAct
 	AActor *ActorHit = Hit.GetActor();
 	if (ActorHit)
 	{
-		//UE_LOG(LogTemp, Warning, TEXT("Line Trace Hit: %s"), *ActorHit->GetName());
+		UE_LOG(LogTemp, Warning, TEXT("Line Trace Hit: %s"), *ActorHit->GetName());
 	}
 
-	//if we hit something then attach a physics handle
+	return Hit;
 }
 
+// Called every frame
+void UGrabberComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction)
+{
+	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-
+	// ...
+}
