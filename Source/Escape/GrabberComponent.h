@@ -36,4 +36,10 @@ private:
 
 	//returns hit for first physics body in reach
 	FHitResult GetFirstPhysicsBodyInReach() const;
+
+	//return line trace end
+	FVector GetPlayerReach() const;
+
+	//Get Player Position in the world	
+	FVector GetPlayerWorldPosition() const;
 };
