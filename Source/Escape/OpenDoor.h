@@ -49,10 +49,10 @@ private:
 	float TriggerMass = 100.f;
 
 	UPROPERTY(EditAnywhere)
-	ATriggerVolume* PressurePlate;
+	ATriggerVolume* PressurePlate = nullptr;
 
-	UPROPERTY(EditAnywhere)
-	AActor* ActorThatOpens;
+	// UPROPERTY(EditAnywhere)
+	// AActor* ActorThatOpens = nullptr;
 
 
 		
