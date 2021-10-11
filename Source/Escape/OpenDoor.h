@@ -27,10 +27,15 @@ public:
 	void OpenDoor(float DeltaTime);
 	void CloseDoor(float DeltaTime);
 	float TotalMassOfActorsOnPlate() const;
+	void FindAudioComponent();
+	void FindPressurePlate();
 
 private:
 	float InitialYaw;
 	float CurrentYaw;
+
+	bool IsOpenDoorSoundPlaying = false;
+	bool IsCloseDoorSoundPlaying = true;
 
 	UPROPERTY(EditAnywhere)
 	float OpenAngle = 90.f;
@@ -53,6 +58,9 @@ private:
 
 	// UPROPERTY(EditAnywhere)
 	// AActor* ActorThatOpens = nullptr;
+
+	UPROPERTY()
+	UAudioComponent* AudioComponent = nullptr;
 
 
 		
