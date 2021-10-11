@@ -1,9 +1,8 @@
 // Copyright @AHS12 2021 All Right Preserved
-
+#include "OpenDoor.h"
 #include "Engine/World.h"
 #include "Components/AudioComponent.h"
 #include "GameFramework/PlayerController.h"
-#include "OpenDoor.h"
 #include "GameFramework/Actor.h"
 
 // Sets default values for this component's properties
