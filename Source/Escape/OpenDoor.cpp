@@ -133,6 +133,6 @@ float UOpenDoor::TotalMassOfActorsOnPlate() const
 	{
 		TotalMass += Actor->FindComponentByClass<UPrimitiveComponent>()->GetMass();
 	}
-	//UE_LOG(LogTemp, Warning, TEXT("%s on pressure plate has a total mass of %f"), *GetOwner()->GetName(), TotalMass);
+	UE_LOG(LogTemp, Warning, TEXT("%s on pressure plate has a total mass of %f"), *GetOwner()->GetName(), TotalMass);
 	return TotalMass;
 }
